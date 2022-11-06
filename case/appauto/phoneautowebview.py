@@ -1,11 +1,10 @@
 import os
 import platform
-import time
-import uiautomator2
 from loguru import logger
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
+from configs import *
 
 
 """
@@ -32,7 +31,7 @@ class AutoWebView:
         options.add_experimental_option('androidProcess', optionsData['androidProcess'])
 
         # version 手机驱动版本，需指定
-        path = ChromeDriverManager(path='auto/', version="100.0.4896.60").install()
+        path = ChromeDriverManager(path='auto/', version=CHROMEDRIVERVERSION).install()
         self.driver = webdriver.Chrome(executable_path=path, options=options)
 
 
@@ -81,3 +80,12 @@ class AutoWebView:
 
     def openbaidubaike(self, keyWord):
         self.driver.find_element(By.XPATH, f'//div[@class="c-title"]/em[contains(text(),"{keyWord}")]').click()
+
+
+if __name__ == '__main__':
+
+    from phoneObject import PO
+    phone =PO.getPhoneSerial()
+    AutoWebView(phone).senftext('www.baidu.com')
+    AutoWebView(phone).baiduinput('张无忌')
+    AutoWebView(phone).openbaidubaike('张无忌')
