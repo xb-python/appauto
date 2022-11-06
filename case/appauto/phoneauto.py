@@ -4,27 +4,29 @@ import uiautomator2
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from uiautomator2 import Direction
-from phoneautowebview import PhoneAutoWebView
 
 
 """
 APP自动化 执行层
 """
 
-class PhoneAuto(PhoneAutoWebView):
+class AutoStep():
+
+    def __init__(self, phone):
+        self.phone = phone
 
 
-    def appStart(self):
-        self.phone.app_start('com.tencent.mm')
+    def appStart(self, androidPackage):
+        os.popen(f' adb shell am start -W {androidPackage}')
 
-    def appClear(self):
-        self.phone.app_clear('com.tencent.mm')
+    def appClear(self, androidPackage):
+        self.phone.app_clear(androidPackage)
 
-    def appWait(self):
-        self.phone.app_wait('com.tencent.mm')
+    def appWait(self, androidPackage):
+        self.phone.app_wait(androidPackage)
 
-    def appStop(self):
-        self.phone.app_stop('com.tencent.mm')
+    def appStop(self, androidPackage):
+        self.phone.app_stop(androidPackage)
 
     def signIn(self, user, password):
         """微信登录"""
@@ -47,7 +49,6 @@ class PhoneAuto(PhoneAutoWebView):
             time.sleep(2)
         self.phone(text='我').click()
         time.sleep(1)
-        self.phone.screenshot(f'./img/{self.caseid}_signIn.jpg')
 
     def sendMessage2(self, url):
         self.phone(text='通讯录').click()
@@ -83,10 +84,8 @@ class PhoneAuto(PhoneAutoWebView):
                 break
             self.phone(text=url).click()
         time.sleep(10)
-        self.phone.screenshot(f'./img/{self.caseid}_sendMessage2.jpg')
 
-    def start_chrome(self,url):
-        os.popen(f' adb shell am start -W com.android.chrome')
+    def chromeopenuel(self,url):
         self.phone.app_wait('com.android.chrome')
         self.phone.xpath('//*[@resource-id="com.android.chrome:id/url_bar"]').click()
         self.phone.clear_text()
@@ -95,27 +94,7 @@ class PhoneAuto(PhoneAutoWebView):
         time.sleep(2)
 
 
-        """
-        以下 Chrome 选项适用于 Chrome 和 Web View 应用：
-        androidPackage：Chrome 或 WebView 应用的程序包名称。
-        androidDeviceSerial：（可选）用于启动应用程序的设备序列号（请参阅下面的“多个设备”部分）。
-        androidUseRunningApp：（可选）附加到已在运行的应用程序，而不是使用清晰的数据目录启动应用程序。
-        以下功能仅适用于 Web 视图应用。
-        androidActivity：托管 Web View 的活动的名称。
-        androidProcess：（可选）托管 WebView 的活动的进程名称（由 ps 给出）。如果未给出，则假定进程名称与androidPackage 相同。 
-        """
-        path = os.getcwd() + '/chromedriver2'
 
-        app = self.phone.app_current()
-        package = app.get('package')
-        options = webdriver.ChromeOptions()
-        options.add_experimental_option('androidPackage', package)
-        options.add_experimental_option('androidDeviceSerial', self.phone.serial)
-        options.add_experimental_option('androidUseRunningApp', True)
-        driver = webdriver.Chrome(executable_path=path, options=options)
-
-        driver.find_elements(By.XPATH, '//*[@id="msKeyWord"]')[0].send_keys('诺基亚')
-        driver.quit()
 
     def searchMiniProgram(self):
         self.phone(resourceId='com.tencent.mm:id/f2s', text='微信').click()

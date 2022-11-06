@@ -1,6 +1,5 @@
-Appium-Python-Client==2.5
 selenium==4.5.0
-tomorrow==0.2.3
+tomorrow3==1.2.0
 uiautomator2==2.16.19
 webdriver-manager==3.8.4
 weditor==0.6.5
