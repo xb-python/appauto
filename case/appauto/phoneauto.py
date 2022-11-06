@@ -1,8 +1,5 @@
 import os
 import time
-import uiautomator2
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 from uiautomator2 import Direction
 
 
@@ -110,8 +107,10 @@ class AutoStep():
 
 
 if __name__ == '__main__':
-    PA = PhoneAuto()
-    # PA.searchMiniProgram()
+
+    from phoneObject import PO
+    phone = PO.getPhoneSerial()
+    AutoStep(phone).chromeopenuel('www.baidu.com')
 
 
 

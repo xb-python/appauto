@@ -3,7 +3,7 @@ import uiautomator2 as u2
 from loguru import logger
 from phoneauto import AutoStep
 from phoneautowebview import AutoWebView
-from phoneObject import getPhoneSerial, delUsePhone
+from phoneObject import PO
 """
 用例层：存放用例
 """
@@ -13,13 +13,14 @@ class TestApp(unittest.TestCase):
 
 
     def setUp(self) -> None:
-        self.phone = u2.connect(getPhoneSerial())
-        logger.info(f'测试之前的准备：链接手机:{self.phone.serial}')
+        self.phone = PO.getPhoneSerial()
+        self.serial = self.phone.serial
+        logger.info(f'测试之前的准备：链接手机:{self.serial}')
         logger.info('测试用例之前的准备：打开App')
 
     def tearDown(self) -> None:
         logger.info('测试用例之后的收尾：关闭App')
-        delUsePhone(self.phone.serial)
+        PO.delUsePhone(self.serial)
         logger.info(f'测试之后的收尾：断开手机:{self.phone.serial}')
 
     # @unittest.skip('直接跳过')
