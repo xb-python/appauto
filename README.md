@@ -14,12 +14,13 @@
 #### 安装教程
 
 1.  安装依赖包pip install -r requirements.txt
+2.  python3.8
 
 
 #### 使用说明
 
-1.  多线程多设备运行start_py
-2.  单元测试运行test_api,py
+1.  多线程多设备运行start_up.py
+2.  单元测试运行test_api.py
 
 
 #### 参与贡献
@@ -30,5 +31,4 @@
  
 #### 附
 
-1.  小白初次开源
-2.  欢迎大神交流
+    欢迎交流学习（QQ：79147363）
