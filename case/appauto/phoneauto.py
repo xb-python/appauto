@@ -27,8 +27,8 @@ class AutoStep():
 
     def signIn(self, user, password):
         """微信登录"""
-        self.phone(text='登录').click()
-        self.phone(text='用微信号/QQ号/邮箱登录').click()
+        # self.phone(text='登录').click()
+        # self.phone(text='用微信号/QQ号/邮箱登录').click()
         self.phone(text='请填写微信号/QQ号/邮箱').click()
         self.phone(text='请填写微信号/QQ号/邮箱').send_keys(user)
         if self.phone.xpath('//*[@resource-id="com.tencent.mm:id/g6b"]/android.widget.EditText[1]').wait(timeout=3):
@@ -110,6 +110,7 @@ if __name__ == '__main__':
 
     from phoneObject import PO
     phone = PO.getPhoneSerial()
+    AutoStep(phone).sendMessage2('www.baidu.com')
     AutoStep(phone).chromeopenuel('www.baidu.com')
 
 

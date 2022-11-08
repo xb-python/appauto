@@ -21,14 +21,15 @@ class TestApp(unittest.TestCase):
     def tearDown(self) -> None:
         logger.info('测试用例之后的收尾：关闭App')
         PO.delUsePhone(self.serial)
-        logger.info(f'测试之后的收尾：断开手机:{self.phone.serial}')
+        logger.info(f'测试之后的收尾：断开手机:{self.serial}')
 
     # @unittest.skip('直接跳过')
     def test_demo01(self):
         logger.info("第1个用例")
         self.androidPackage = 'com.tencent.mm'
+        self.androidActivity = '.plugin.account.ui.ContactsSyncUI'
         AutoStep(self.phone).appClear(self.androidPackage)
-        AutoStep(self.phone).appStart(self.androidPackage)
+        AutoStep(self.phone).appStart(f'{self.androidPackage}/{self.androidActivity}')
         AutoStep(self.phone).appWait(self.androidPackage)
         AutoStep(self.phone).signIn("wxid_8pa07s4ajq3l12", "abcd135790")
         AutoStep(self.phone).sendMessage2('https://www.baidu.com/')
