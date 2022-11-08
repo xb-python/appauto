@@ -14,22 +14,13 @@ class AutoMiniProgram(WebView):
         super(AutoMiniProgram, self).senftext(text)
 
 
-    def miniprogram(self, text, by, value=None):
-        # tars = self.driver.find_elements(by, value)
-        # print('tars:', len(tars))
-        # tar = tars[-1]
-        # tar.click()
-
-        # 小程序 输入 存在问题，还在测试中
+    def miniprogram(self, text):
+        self.driver.find_element(By.XPATH, f'//wx-input[@placeholder="搜索"]').click()
         self.senftext()
+        self.phone.send_keys(text)
+        self.phone.press("search")  # 点击搜索按键
+        self.phone.press('enter')
 
-        tar = self.driver.find_element(By.XPATH, '//wx-input[@placeholder="输入关键词搜索"]')
-        js = f'arguments[0].value="{text}";arguments[0].cursor="{len(text)}";'
-        self.driver.execute_script(js, tar)
-        print('value:', tar.get_attribute('value'))
-        print('cursor:', tar.get_attribute('cursor'))
-        print('tar:',tar[0].get_attribute('role'))
-        tar[0].send_keys(text)
 
 
 
@@ -40,7 +31,5 @@ if __name__ == '__main__':
 
     from phoneObject import PO
     phone =PO.getPhoneSerial()
-    # AutoMiniProgram(phone,'魔卡图鉴').miniprogram('123456789', By.XPATH, f'//wx-input[@placeholder="搜索"]')
-    # AutoMiniProgram(phone,'贴吧').miniprogram('酒吞童子', By.XPATH, f'//wx-text/span[contains(text(),"游戏")]')
-    AutoMiniProgram(phone,'贴吧').miniprogram('酒吞童子', By.XPATH, f'//wx-text/span[contains(text(),"输入关键词")]')
+    AutoMiniProgram(phone,'魔卡图鉴').miniprogram('酒吞童子')
 
