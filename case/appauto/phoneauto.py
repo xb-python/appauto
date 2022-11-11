@@ -93,14 +93,14 @@ class AutoStep():
 
 
 
-    def searchMiniProgram(self):
-        self.phone(resourceId='com.tencent.mm:id/f2s', text='微信').click()
+    def openMiniProgram(self, miniProgramName):
+        # self.phone(resourceId='com.tencent.mm:id/f2s', text='微信').click()
         # self.phone(resourceId='com.tencent.mm:id/j5t').click()
         self.phone.swipe_ext(Direction.DOWN, 1)
         time.sleep(2)
         self.phone(text='搜索小程序').click(timeout=5)
         time.sleep(5)
-        self.phone.send_keys('魔卡百科')
+        self.phone.send_keys(miniProgramName)
         time.sleep(2)
         self.phone.press("search")  # 点击搜索按键
 
@@ -110,8 +110,7 @@ if __name__ == '__main__':
 
     from phoneObject import PO
     phone = PO.getPhoneSerial()
-    AutoStep(phone).sendMessage2('www.baidu.com')
-    AutoStep(phone).chromeopenuel('www.baidu.com')
+    AutoStep(phone).openMiniProgram(miniProgramName='魔卡百科')
 
 
 

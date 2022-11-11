@@ -3,6 +3,7 @@ import uiautomator2 as u2
 from loguru import logger
 from phoneauto import AutoStep
 from phoneautowebview import AutoWebView
+from phoneautominiprogram import AutoMiniProgram
 from phoneObject import PO
 """
 用例层：存放用例
@@ -52,7 +53,8 @@ class TestApp(unittest.TestCase):
     def test_demo03(self):
         """第三个用例"""
         logger.info("第3个用例")
-
+        AutoStep(self.phone).openMiniProgram()
+        AutoMiniProgram(self.phone, '魔卡图鉴').miniprogram('酒吞童子')
 
     def test_demo04(self):
         """第4个用例"""

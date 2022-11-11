@@ -26,6 +26,7 @@ class WebView:
         options.add_experimental_option('androidProcess', optionsData['androidProcess'])
         path = ChromeDriverManager(path='driver/', version=CHROMEDRIVERVERSION).install()
         self.driver = webdriver.Chrome(executable_path=path, options=options)
+        self.driver.implicitly_wait(3)
 
     def getPidName(self):
         pidcommand = f'adb -s {self.serial} shell dumpsys activity top| {"findstr" if platform.system() == "Windows" else "grep"} ACTIVITY'
