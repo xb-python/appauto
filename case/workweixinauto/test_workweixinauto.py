@@ -71,7 +71,7 @@ class TestWorkWeixin(unittest.TestCase):
         print(data)
 
 
-    def text_message_send(self):
+    def test_message_send(self):
         """
         发送应用消息
         应用支持推送文本、图片、视频、文件、图文等类型。
@@ -79,7 +79,7 @@ class TestWorkWeixin(unittest.TestCase):
         请求地址： https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=ACCESS_TOKEN
         """
         data = {
-                   # "touser" : "UserID1|UserID2|UserID3",
+                   "toparty" : 2,
                    # "toparty" : "PartyID1|PartyID2",
                    # "totag" : "TagID1 | TagID2",
                    "msgtype" : "text",
