@@ -95,3 +95,10 @@ class TestApp(unittest.TestCase):
     def test_demo10(self):
         """第10个用例"""
         logger.info("第10个用例")
+
+
+if __name__ == '__main__':
+    
+    suite = unittest.TestSuite()
+    suite.addTest(TestApp('test_demo10'))
+    unittest.TextTestRunner().run(suite)
