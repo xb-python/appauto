@@ -61,17 +61,14 @@ class TestApp(unittest.TestCase):
         logger.info("第4个用例")
 
 
-
     def test_demo05(self):
         """第5个用例"""
         logger.info("第5个用例")
 
 
-
     def test_demo06(self):
         """第6个用例"""
         logger.info("第6个用例")
-
 
 
     def test_demo07(self):
