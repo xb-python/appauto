@@ -6,7 +6,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from configs import CHROMEDRIVERVERSION
 
 
-class WebView:
+class AutoWebView:
 
     def __init__(self, phone):
         self.phone = phone
@@ -57,14 +57,19 @@ class WebView:
             self.driver.switch_to.window(windows[-1])  # 切换最新窗口
             logger.debug(f'window: {windows[-1]}, windowUrl: {self.driver.current_url}')  # 打印窗口和对应url
             logger.debug(f'切换成功')
-            return True
+            return self
 
         for window in windows:
             self.driver.switch_to.window(window)  # 切换窗口
             logger.debug(f'window: {window}, windowUrl: {self.driver.current_url}')  # 打印窗口和对应url
             if text in self.driver.current_url or text in self.driver.execute_script('return document.documentElement.outerHTML'):
                 logger.debug(f'切换成功')
-                return True
+                return self
         else:
             logger.error(f'切换失败，未切换到含有{text}的页面')
-            return False
+
+    def find_element(self, type_value):
+        return self.driver.find_element(type_value['type'], type_value['value'])
+
+    def find_elements(self, type_value):
+        return self.driver.find_elements(type_value['type'], type_value['value'])

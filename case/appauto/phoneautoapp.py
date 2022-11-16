@@ -1,5 +1,5 @@
-import os
 import time
+from autonative import AutoNative
 from uiautomator2 import Direction
 
 
@@ -7,36 +7,26 @@ from uiautomator2 import Direction
 APP自动化 执行层
 """
 
-class AutoStep():
+class AutoApp(AutoNative):
 
     def __init__(self, phone):
-        self.phone = phone
+        super(AutoApp, self).__init__(phone)
+        self.input_user = self.phone(text='请填写微信号/QQ号/邮箱')
+        self.input_passwd = self.phone(text='请填写密码')
+        self.login_Button = self.phone(text='同意并登录')
+        self.input_miniprogram = self.phone(text='搜索小程序')
 
-
-    def appStart(self, androidPackage):
-        os.popen(f' adb shell am start -W {androidPackage}')
-
-    def appClear(self, androidPackage):
-        self.phone.app_clear(androidPackage)
-
-    def appWait(self, androidPackage):
-        self.phone.app_wait(androidPackage)
-
-    def appStop(self, androidPackage):
-        self.phone.app_stop(androidPackage)
 
     def signIn(self, user, password):
         """微信登录"""
-        # self.phone(text='登录').click()
-        # self.phone(text='用微信号/QQ号/邮箱登录').click()
-        self.phone(text='请填写微信号/QQ号/邮箱').click()
-        self.phone(text='请填写微信号/QQ号/邮箱').send_keys(user)
+        self.input_user.click()
+        self.input_user.send_keys(user)
         if self.phone.xpath('//*[@resource-id="com.tencent.mm:id/g6b"]/android.widget.EditText[1]').wait(timeout=3):
             self.phone.xpath('//*[@resource-id="com.tencent.mm:id/g6b"]/android.widget.EditText[1]').click()
         else:
-            self.phone(text='请填写密码').click()
+            self.input_passwd.click()
         self.phone.send_keys(password)
-        self.phone(text='同意并登录').click()
+        self.login_Button.click()
         for i in range(10):
             time.sleep(3)
             if self.phone(text='暂不设置').wait(timeout=1):
@@ -91,14 +81,13 @@ class AutoStep():
         time.sleep(2)
 
 
-
-
     def openMiniProgram(self, miniProgramName):
         # self.phone(resourceId='com.tencent.mm:id/f2s', text='微信').click()
         # self.phone(resourceId='com.tencent.mm:id/j5t').click()
         self.phone.swipe_ext(Direction.DOWN, 1)
         time.sleep(2)
-        self.phone(text='搜索小程序').click(timeout=5)
+        # self.phone(text='搜索小程序').click(timeout=5)
+        self.input_miniprogram.click(timeout=5)
         time.sleep(5)
         self.phone.send_keys(miniProgramName)
         time.sleep(2)
@@ -108,9 +97,9 @@ class AutoStep():
 
 if __name__ == '__main__':
 
-    from phoneObject import PO
+    from phoneobject import PO
     phone = PO.getPhoneSerial()
-    AutoStep(phone).openMiniProgram(miniProgramName='魔卡百科')
+    AutoApp(phone).openMiniProgram(miniProgramName='魔卡百科')
 
 
 

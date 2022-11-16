@@ -1,14 +1,13 @@
 import time
 from selenium.webdriver.common.by import By
-from uiautomator2 import Direction
-from webview import WebView
+from autowebview import AutoWebView
 
 
 """
 webview自动化 执行层
 """
 
-class AutoMiniProgram(WebView):
+class AutoMiniProgram(AutoWebView):
 
     def __init__(self, phone, text=None):
         super(AutoMiniProgram, self).__init__(phone)
@@ -40,7 +39,7 @@ class AutoMiniProgram(WebView):
 
 if __name__ == '__main__':
 
-    from phoneObject import PO
+    from phoneobject import PO
     phone =PO.getPhoneSerial()
     AutoMiniProgram(phone,'魔卡图鉴').miniprogram('酒吞童子')
 
